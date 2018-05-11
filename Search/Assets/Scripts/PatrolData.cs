@@ -7,6 +7,8 @@ public class PatrolData : MonoBehaviour {
     public bool follow_player = true;
     public GameObject player;
     public Vector3 start_position;
+
+    public List<Vector3> PatrolRoute;//巡逻路线
 	// Use this for initialization
 	void Start () {
 		

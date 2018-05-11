@@ -10,10 +10,11 @@ public class FirstSceneController : MonoBehaviour ,IUserAction, ISceneController
     public GameObject player;
     public PatrolActionManager action_manager;
     public ScoreRecorder recorder;
+    private bool game_over;
 
-    void IUserAction.Burst(float x, float y)
+    public void Burst(float x, float y)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     int IUserAction.GetBurstCDTime()
@@ -21,9 +22,9 @@ public class FirstSceneController : MonoBehaviour ,IUserAction, ISceneController
         throw new System.NotImplementedException();
     }
 
-    int IUserAction.GetScore()
+    public int GetScore()
     {
-        throw new System.NotImplementedException();
+        return recorder.GetScore();
     }
 
     public void LoadResources()
@@ -43,10 +44,10 @@ public class FirstSceneController : MonoBehaviour ,IUserAction, ISceneController
             player.GetComponent<Animator>().SetBool("run", true);
 
 
-            player.transform.LookAt(temp * 1000);
+            player.transform.LookAt(temp * 1000);//面朝该方向
             player.transform.position = temp * player_speed * Time.deltaTime + player.transform.position;
         }
-        else
+        else//不跑动的情况
         {
             player.GetComponent<Animator>().SetBool("run", false);
         }
@@ -68,13 +69,12 @@ public class FirstSceneController : MonoBehaviour ,IUserAction, ISceneController
     }
     public bool GetGameover()
     {
-        //throw new System.NotImplementedException();
-        return false;
+        return game_over;
     }
 
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         SSDirector director = SSDirector.GetInstance();
         director.CurrentSceneController = this;
         Factory = Singleton<GameFactory>.Instance;
@@ -88,9 +88,26 @@ public class FirstSceneController : MonoBehaviour ,IUserAction, ISceneController
 		
 	}
 
-    public int GetScore()
+    void OnEnable()
     {
-        return recorder.GetScore();
+        GameEventManager.ScoreChange += AddScore;
+        GameEventManager.GameoverChange += Gameover;
     }
 
+    void OnDisable()//解除绑定
+    {
+        GameEventManager.ScoreChange -= AddScore;
+        GameEventManager.GameoverChange -= Gameover;
+    }
+    void AddScore()
+    {
+        recorder.AddScore();
+    }
+
+    void Gameover()
+    {
+        game_over = true;
+        Factory.StopPatrol();
+        action_manager.DestroyAllAction();
+    }
 }

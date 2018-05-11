@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GoPatrolAction : SSAction {//巡逻兵的巡逻与抓捕
-    private enum Direction { EAST, NORTH,WEST,SOUTH}
+    
     private float pos_x, pos_z;
     private float move_length;
     private float move_speed = 1.2f;
     private bool move_sign = true;
-    private Direction direction = Direction.EAST;
+    private int direction = 0;
     private PatrolData data;
     
 
@@ -43,21 +43,11 @@ public class GoPatrolAction : SSAction {//巡逻兵的巡逻与抓捕
     {
         if (move_sign)
         {
-            switch (direction)
-            {
-                case Direction.EAST:
-                    pos_x -= move_length;
-                    break;
-                case Direction.NORTH:
-                    pos_z += move_length;
-                    break;
-                case Direction.WEST:
-                    pos_x += move_length;
-                    break;
-                case Direction.SOUTH:
-                    pos_z -= move_length;
-                    break;
-            }
+            //switch (direction% data.PatrolRoute.Count)
+
+
+            pos_x = data.PatrolRoute[direction % data.PatrolRoute.Count].x;
+            pos_z = data.PatrolRoute[direction % data.PatrolRoute.Count].z;
             move_sign = false;
         }
         this.transform.LookAt(new Vector3(pos_x, 0, pos_z));
@@ -69,10 +59,10 @@ public class GoPatrolAction : SSAction {//巡逻兵的巡逻与抓捕
         else
         {
             direction = direction + 1;
-            if (direction > Direction.SOUTH)
+            /*if (direction > Direction.SOUTH)
             {
                 direction = Direction.EAST;
-            }
+            }*/
             move_sign = true;
         }
     }

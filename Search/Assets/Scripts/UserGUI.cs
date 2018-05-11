@@ -7,12 +7,15 @@ public class UserGUI : MonoBehaviour {
     private bool game_start = false;
 	// Use this for initialization
 	void Start () {
+        Debug.Log(SSDirector.GetInstance().CurrentSceneController);
         action = SSDirector.GetInstance().CurrentSceneController as IUserAction;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (game_start && !action.GetGameover())
+       // Debug.Log(action);
+        if (game_start
+            && !action.GetGameover())
         {
 
             action.Move(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
