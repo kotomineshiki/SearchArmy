@@ -28,6 +28,7 @@ public class UserGUI : MonoBehaviour {
 	}
     private void OnGUI()
     {
+        GUI.Label(new Rect(Screen.width / 2 +50, Screen.width / 2 + 150, 100, 50),"待施救友军："+ action.GetFriend().ToString());
         if (!game_start)
         {
             if(GUI.Button(new Rect(Screen.width / 2 - 50, Screen.width / 2 - 150, 100, 50), "start"))

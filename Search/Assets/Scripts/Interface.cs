@@ -18,6 +18,8 @@ public interface IUserAction
 
     bool GetGameover();
     void BeginGame();
+
+    int GetFriend();
 }
 
 public interface ISSActionCallback

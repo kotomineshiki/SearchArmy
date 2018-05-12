@@ -5,7 +5,7 @@ using UnityEngine;
 public class FirstSceneController : MonoBehaviour ,IUserAction, ISceneController{
     public Camera MainCamera;
     public GameFactory Factory;
-    public float player_speed = 5f;
+    public float player_speed = 3.5f;
     private List<GameObject> patrols;
     public GameObject player;
     public PatrolActionManager action_manager;
@@ -20,6 +20,10 @@ public class FirstSceneController : MonoBehaviour ,IUserAction, ISceneController
     int IUserAction.GetBurstCDTime()
     {
         throw new System.NotImplementedException();
+    }
+    public int GetFriend()
+    {
+        return recorder.GetFriendNumber();//获取待救友人个数
     }
 
     public int GetScore()
@@ -92,20 +96,26 @@ public class FirstSceneController : MonoBehaviour ,IUserAction, ISceneController
     {
         GameEventManager.ScoreChange += AddScore;
         GameEventManager.GameoverChange += Gameover;
+        GameEventManager.FriendTouchChange += subFriend;
     }
 
     void OnDisable()//解除绑定
     {
         GameEventManager.ScoreChange -= AddScore;
         GameEventManager.GameoverChange -= Gameover;
+        GameEventManager.FriendTouchChange -= subFriend;
     }
     void AddScore()
     {
         recorder.AddScore();
     }
-
+    void subFriend()
+    {
+        recorder.ReduceFriend();
+    }
     void Gameover()
     {
+
         game_over = true;
         Factory.StopPatrol();
         action_manager.DestroyAllAction();

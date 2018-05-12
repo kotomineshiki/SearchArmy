@@ -8,8 +8,9 @@ public class GameEventManager : MonoBehaviour {
 
     public delegate void GameoverEvent();
     public static event GameoverEvent GameoverChange;
-    public delegate void CrystalEvent();
-    public static event CrystalEvent CrystalChange;
+
+    public delegate void FriendTouchEvent();
+    public static event GameoverEvent FriendTouchChange;
 
     public void PlayerEscape()
     {
@@ -25,11 +26,13 @@ public class GameEventManager : MonoBehaviour {
             GameoverChange();
         }
     }
-    public void ReduceCrystalNum()
+
+
+    public void PlayerFriend()
     {
-        if (CrystalChange != null)
+        if (FriendTouchChange != null)
         {
-            CrystalChange();
+            FriendTouchChange();
         }
     }
     // Use this for initialization

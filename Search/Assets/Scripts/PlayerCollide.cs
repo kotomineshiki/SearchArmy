@@ -20,7 +20,10 @@ public class PlayerCollide : MonoBehaviour {
         }
         if (other.gameObject.tag == "Friend")//遇到朋友了
         {
-            Singleton<GameEventManager>.Instance.PlayerEscape();//可以加分，并且朋友需要跟随
+            Debug.Log("FO");
+            Singleton<GameEventManager>.Instance.PlayerFriend();
+
         }
+
     }
 }

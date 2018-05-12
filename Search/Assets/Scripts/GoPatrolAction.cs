@@ -52,7 +52,7 @@ public class GoPatrolAction : SSAction {//巡逻兵的巡逻与抓捕
         }
         this.transform.LookAt(new Vector3(pos_x, 0, pos_z));
         float distance = Vector3.Distance(transform.position, new Vector3(pos_x, 0, pos_z));
-        if (distance > 0.9)
+        if (distance > 0.5)
         {
             transform.position = Vector3.MoveTowards(this.transform.position, new Vector3(pos_x, 0, pos_z), move_speed * Time.deltaTime);
         }

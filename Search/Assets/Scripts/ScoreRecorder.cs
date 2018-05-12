@@ -5,7 +5,7 @@ using UnityEngine;
 public class ScoreRecorder : MonoBehaviour {
     public FirstSceneController sceneController;
     public int score = 0;
-    public int to_rescue = 3;
+    public int to_rescue = 2;
 
 	// Use this for initialization
 	void Start () {
